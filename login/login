@@ -1,0 +1,238 @@
+<?php
+	session_start();
+?>
+
+<!DOCTYPE html>
+<html>
+<style>
+.login{
+    border-radius: 5px;
+    text-align: center;
+	padding-top: 120px;
+	padding-bottom: 130px;
+    background: #fff;
+ }
+
+.login h1{
+   letter-spacing:-2px;
+   font-style:italic;
+   font-size: 33px;
+   color: #4e393d;
+   }
+.login h2 {
+ margin-left: -55px;
+ font-size: 13px;
+}
+
+.login h2:hover {
+     text-decoration:underline;
+	 cursor:pointer;
+	 }
+	
+.login h3 {
+    margin-left: -30px;
+	font-size: 15px;
+	color: #000;
+}
+
+.login p {
+   letter-spacing:-2px;
+   font-style:italic;
+   font-size: 33px;
+   color: #4e393d;
+}
+
+ button[type = submit] {
+            background-color: #4e393d;
+            border: none;
+            font-style:italic;
+            color: white;
+            padding: 10px 10px;
+            margin: 10px 10px;
+            cursor: pointer;
+ }
+  input[type = submit] {
+            background-color: #4e393d;
+            border: none;
+            font-style:italic;
+            color: white;
+            padding: 10px 10px;
+            margin: 10px 10px;
+            cursor: pointer;
+ }
+
+input[type = text] {
+    padding: 5px 30px;
+}
+input[type = password] {
+    padding: 5px 30px;
+}
+.login h1 {
+ font-style: italic;
+ color: #4e393d;
+ letter-spacing: -3px;
+ }
+</style>
+<head>
+	<meta charset="utf-8">
+	<title>Login</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.1/css/all.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.2/css/all.min.css"/>
+	 <link rel="stylesheet" href="stylelic.css">
+</head>
+<body>
+ <!-- Top Bar Start -->
+        <div class="top-bar d-none d-md-block">
+            <div class="container-fluid">
+                <div class="row">
+                    <div class="col-md-8">
+                        <div class="top-bar">
+                            <div class="time">
+                                <i class="far fa-clock"></i>
+                                <h4>8:00 - 12:00</h4>
+                                <p>Luni - Vineri</p>
+                            </div>
+                            <div class="time">
+                                <i class="fa fa-phone-alt"></i>
+                                <h4>(+40) 770 779 888</h4>
+                                <p>Relații clienți</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- Top Bar End -->
+		
+<!-- Navgaition menu -->
+<nav>
+    <div class="navbar">
+      <div class="logo"><a href="home.php">Body</br>Techs</a></div>
+      <ul class="menu">
+      <?php
+			if(isset($_SESSION["useruid"])) {
+				echo "<li><a href='galerie.php'>Galerie LIVE</a></li>";
+			}
+            ?>
+            <li>
+       <div class="dropdown">
+            <a href="">Servicii <i class="fa fa-caret-down"></i></a>
+            <div class="dropdown-content">
+                <a href="servicii_clase.php">Clase</a>
+                <a href="servicii_functional.php"">Functional</a>
+                <a href="servicii_cross.php"">Cross-training</a>
+            </div>
+        </div> 
+        </li>
+          <li><a href="orar_clase.php">Orar</a></li>
+          <li><a href="tarif_clase.php">Tarife</a></li>
+		   <?php
+			if(isset($_SESSION["useruid"])) {
+				echo "<li><a href='magazin.php'>Produse</a></li>";
+			}
+			else{
+				echo "<li><a href='login.php'>Produse</a></li>";
+			}
+		  ?>
+		  <li><a href="instructori.php">Despre noi</a></li>
+		  <li><a href="contact.php">Contact</a></li>
+		  <?php
+			if(isset($_SESSION["useruid"])) {
+				echo "<li><a href='profil.php'>Bună, " . $_SESSION["useruid"] . "</a></li>";
+				echo "<li><a href='includes/logout.inc.php'><i class='fas fa-sign-out-alt'></i></a></li>";
+			}
+			else{
+				echo "<li><a class='current' href='login.php'><i class='fa fa-user'></i></a></li>";
+			}
+		  ?>
+		  <div class="cancel-btn">
+            <i class="fas fa-times"></i>
+          </div>
+      </ul>
+    </div>
+    <div class="menu-btn">
+      <i class="fas fa-bars"></i>
+    </div>
+  </nav>
+      </div>
+<!-- Navgaition menu -->  
+	  
+	 <!-- Move to top button -->
+  <div class="scroll-button">
+    <a href="#"><i class="fa fa-chevron-up"></i></a>
+  </div>
+  <!-- Move to top button -->
+  
+	<div class="login">
+	<section class="login-form">
+	<h1>Autentificare</h1>
+	<br></br>
+<form action="includes/login.inc.php" method="post">
+	<label for="usn">
+		<i class="fas fa-user"></i>
+	</label>
+	<input type="text" name="uid" placeholder=" Email/Nume utilizator">
+	<br></br>
+	<label for="pasd">
+		<i class="fas fa-lock"></i>
+	</label>
+	<input type="password" name="pwd" placeholder=" Parolă">
+	<br></br>
+	<button type="submit" name="submit">Logare</button>
+</form>
+<br></br>
+		<h3>Nu ai cont? Înregistrează-te aici.</h3>
+	   <div><a href="signup.php" class="fa fa-arrow-right" style="color:#000"><input type="submit" value="Înregistrare"></a></div>
+
+	<?php
+	if (isset($_GET["error"])){
+		if ($_GET["error"] == "conținutgol"){
+			echo "<p>Completează toate câmpurile!</p>";
+		}
+		else if ($_GET["error"] == "logareeșuată") {
+			echo "<p>Username-ul sau parola nu corespunde!</p>";
+		}
+	}
+?>
+</section>
+	</div>
+	
+	<!-- Footer Section -->
+  <!-- Footer Start -->
+        <div class="footer">
+            <div class="container-fluid">
+                <div class="container">
+                    <div class="footer-info">
+                        <a href="home.html" class="footer-logo"><em>B<span>o</span>D<span>y</span> T<span>e</span>C<span>h</span>S</a>
+                        <h3>Strada Cireșilor 13, Cluj-Napoca, România</em></h3>
+                        <div class="footer-menu">
+                            <p>(+40) 770 779 888</p>
+                            <p>bodytechsstudio@gmail.com</p>
+                        </div>
+                        <div class="footer-social">
+                            <a href=""><i class="fab fa-twitter"></i></a>
+                            <a href=""><i class="fab fa-facebook-f"></i></a>
+                            <a href=""><i class="fab fa-youtube"></i></a>
+                            <a href=""><i class="fab fa-instagram"></i></a>
+                            <a href=""><i class="fab fa-linkedin-in"></i></a>
+                        </div>
+                    </div>
+                </div>
+                <div class="container copyright">
+                    <div class="row">
+                        <div class="copy">
+                            <p>&copy; <a href="home.html"><em>Body Techs</em></a></p>
+                        </div>
+                        <div class="design">
+                            <p>Designed By <a href="home.html"><em>LucaRamona</em></a></p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- Footer End -->
+		
+		<script src="scriptlicenta.js"></script>
+</body>
+</html>
